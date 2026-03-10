@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="km">
-<head meta name="viewport" content="width=device-width, initial-scale=1.0">>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
 <title>Happy Birthday SuuJing</title>
 
@@ -305,8 +306,8 @@ border-radius:15px;
 
 <div class="stars"></div>
 
-<audio autoplay loop>
-<source src="lg.mp3">
+<audio id="bgMusic" loop preload="auto">
+<source src="lg.mp3" type="audio/mpeg">
 </audio>
 
 <div class="container">
@@ -690,7 +691,23 @@ nextPage()
 
 }
 
+const music = document.getElementById("bgMusic");
 
+function startMusic(){
+if(music.paused){
+music.play().catch(()=>{});
+}
+}
+
+window.addEventListener("touchstart", function(){
+
+let music=document.querySelector("audio")
+
+if(music){
+music.play().catch(()=>{})
+}
+
+},{once:true})
 
 </script>
 
