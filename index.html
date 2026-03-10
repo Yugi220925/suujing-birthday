@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="km">
+<head meta name="viewport" content="width=device-width, initial-scale=1.0">>
+<meta charset="UTF-8">
+<title>Happy Birthday SuuJing</title>
+
+<style>
+
+    /* birthday cake */
+
+.cake{
+position:relative;
+width:120px;
+height:80px;
+margin:30px auto;
+background:#ffb6c1;
+border-radius:10px;
+box-shadow:0 10px 20px rgba(0,0,0,0.3);
+}
+
+.candle{
+position:absolute;
+top:-40px;
+left:50%;
+transform:translateX(-50%);
+width:10px;
+height:40px;
+background:white;
+border-radius:3px;
+}
+
+.flame{
+position:absolute;
+top:-12px;
+left:50%;
+transform:translateX(-50%);
+width:12px;
+height:12px;
+background:orange;
+border-radius:50%;
+box-shadow:0 0 10px orange,0 0 20px yellow;
+animation:flicker 0.2s infinite;
+}
+
+@keyframes flicker{
+0%{transform:translateX(-50%) scale(1)}
+50%{transform:translateX(-50%) scale(1.2)}
+100%{transform:translateX(-50%) scale(1)}
+}
+
+    /* realistic fireworks */
+
+.particle{
+position:fixed;
+width:4px;
+height:4px;
+border-radius:50%;
+pointer-events:none;
+animation:particleFade 1.6s ease-out forwards;
+}
+
+@keyframes particleFade{
+0%{
+transform:translate(0,0);
+opacity:1;
+}
+100%{
+opacity:0;
+}
+}
+
+    /* romantic glow title */
+
+h1,h2{
+text-shadow:0 0 10px #ff4da6,0 0 20px #ff4da6;
+}
+
+/* floating light */
+
+.light{
+position:fixed;
+width:6px;
+height:6px;
+background:#ff4da6;
+border-radius:50%;
+opacity:0.6;
+animation:floatLight 8s linear infinite;
+}
+
+@keyframes floatLight{
+0%{transform:translateY(100vh) scale(0)}
+50%{transform:translateY(50vh) scale(1)}
+100%{transform:translateY(-10vh) scale(0)}
+}
+
+/* love confetti */
+
+.loveConfetti{
+position:fixed;
+font-size:20px;
+animation:confettiFall 4s linear forwards;
+}
+
+@keyframes confettiFall{
+0%{
+transform:translateY(-50px) rotate(0deg);
+opacity:1;
+}
+100%{
+transform:translateY(110vh) rotate(360deg);
+opacity:0;
+}
+}
+
+body{
+margin:0;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#000814;
+font-family:'Noto Sans Khmer',sans-serif;
+color:white;
+text-align:center;
+overflow-x:hidden;
+padding:15px;
+}
+
+/* star sky */
+
+.stars{
+position:fixed;
+width:100%;
+height:100%;
+background:url("https://www.transparenttextures.com/patterns/stardust.png");
+animation:starsMove 60s linear infinite;
+opacity:0.6;
+}
+
+@keyframes starsMove{
+from{background-position:0 0}
+to{background-position:1000px 1000px}
+}
+
+/* heart animation */
+
+.heart{
+position:fixed;
+color:#ff4da6;
+font-size:20px;
+animation:fall 5s linear infinite;
+}
+
+@keyframes fall{
+0%{transform:translateY(-50px)}
+100%{transform:translateY(100vh)}
+}
+
+.container{
+position:relative;
+z-index:2;
+width:100%;
+max-width:520px;
+padding:25px;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(10px);
+border-radius:20px;
+box-sizing:border-box;
+}
+
+.page{display:none}
+.page.active{display:block}
+
+button{
+padding:10px 20px;
+margin:5px;
+border:none;
+border-radius:10px;
+background:#ff4da6;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+.gray{background:#666}
+
+img{
+width:100%;
+height:250px;
+object-fit:cover;
+border-radius:15px;
+}
+
+/* fireworks */
+
+.firework{
+position:fixed;
+width:5px;
+height:5px;
+background:white;
+border-radius:50%;
+animation:explode 1s ease-out forwards;
+}
+
+@keyframes explode{
+0%{transform:scale(1)}
+100%{transform:scale(15);opacity:0}
+}
+
+/* ===== GALERI FOTO PAGE 5 ===== */
+
+.gallery{
+display:flex;
+gap:10px;
+overflow-x:auto;
+padding:10px;
+}
+
+.gallery img{
+width:120px;
+height:120px;
+object-fit:cover;
+border-radius:10px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.gallery img:hover{
+transform:scale(1.1);
+}
+
+.photoViewer{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+
+.photoViewer img{
+max-width:90%;
+max-height:90%;
+border-radius:15px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="stars"></div>
+
+<audio autoplay loop>
+<source src="lg.mp3">
+</audio>
+
+<div class="container">
+
+<!-- PAGE 1 -->
+<div id="page0" class="page active">
+<h1>🎉 រីករាយថ្ងៃកំណើត SuuJing My Queen</h1>
+<p>សារពិសេសមួយពី Yugi 💖</p>
+<button onclick="nextPage()">បើកសារ</button>
+</div>
+
+<!-- PAGE 2 -->
+<div id="page1" class="page">
+<h2>💌 សារ​ពិសេស</h2>
+<div id="messages"></div>
+<button class="gray" onclick="prevPage()">ត្រឡប់ក្រោយ</button>
+<button onclick="nextPage()">បន្ត</button>
+</div>
+
+<!-- PAGE 3 -->
+<div id="page2" class="page">
+<h2>📸 អនុស្សាវរីយ៍</h2>
+<img id="slideshow">
+<p>រូបភាពនៃអនុស្សាវរីយ៍ដ៏ស្រស់ស្អាត</p>
+<button class="gray" onclick="prevPage()">ត្រឡប់ក្រោយ</button>
+<button onclick="nextPage()">បន្ត</button>
+</div>
+
+<!-- PAGE 4 -->
+<div id="page3" class="page">
+<h2 class="typing">🎂 ធ្វើបំណងប្រាថ្នា</h2>
+<p>សូមធ្វើបំណងប្រាថ្នាមួយ</p>
+
+<div class="cake">
+<div class="candle">
+<div class="flame" id="flame"></div>
+</div>
+</div>
+
+<button onclick="blowCandle()">ផ្លុំទៀន</button>
+<br>
+<button class="gray" onclick="prevPage()">ត្រឡប់ក្រោយ</button>
+</div>
+
+<!-- PAGE 5 -->
+<div id="page4" class="page">
+<h2>🎁 អំណោយតូចមួយ</h2>
+<p>អ្នកគឺជាមនុស្សពិសេសសម្រាប់ខ្ញុំ</p>
+
+<div class="gallery">
+<img src="f.jpg" onclick="openPhoto(this)">
+<img src="g.jpg" onclick="openPhoto(this)">
+<img src="h.jpg" onclick="openPhoto(this)">
+<img src="i.jpg" onclick="openPhoto(this)">
+<img src="j.jpg" onclick="openPhoto(this)">
+</div>
+
+<button class="gray" onclick="prevPage()">ត្រឡប់ក្រោយ</button>
+<button onclick="nextPage()">បន្ត</button>
+</div>
+
+<!-- PAGE 6 -->
+<div id="page5" class="page">
+<h2>🎆 រីករាយថ្ងៃកំណើត SuuJing My Love</h2>
+<p>ដោយក្ដីស្រឡាញ់ពី Yugi</p>
+<h1>💖🎇💖</h1>
+<button class="gray" onclick="prevPage()">ត្រឡប់ក្រោយ</button>
+</div>
+
+</div>
+
+<div class="photoViewer" id="viewer" onclick="closePhoto()">
+<img id="viewerImg">
+</div>
+
+<script>
+
+/* navigation */
+
+let page=0
+
+function showPage(){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"))
+document.getElementById("page"+page).classList.add("active")
+}
+
+function nextPage(){
+if(page<5){
+page++
+showPage()
+
+if(page==5){
+startFireworks()
+}
+}
+}
+
+function prevPage(){
+if(page>0){
+page--
+showPage()
+}
+}
+
+/* romantic message */
+
+const messages=[
+"សួស្តី My Dear Suujing 💖",
+"ក្នុងចំណោមផ្កាយរាប់លាននៅលើមេឃ ខ្ញុំដឹងគុណដែលជីវិតរបស់ខ្ញុំត្រូវបានប្រទានពរដល់អ្នក។",
+"្តមានរបស់អ្នកធ្វើឱ្យថ្ងៃរបស់ខ្ញុំកាន់តែមានអត្ថន័យ ហើយស្នាមញញឹមរបស់អ្នកតែងតែជាមូលហេតុនៃសុភមង្គលរបស់ខ្ញុំ។",
+"ថ្ងៃកំណើតរបស់អ្នក",
+"ខ្ញុំគ្រាន់តែចង់ឱ្យអ្នកដឹងរឿងមួយ…",
+"អ្នកគឺជាមនុស្សពិសេសម្នាក់សម្រាប់ខ្ញុំ។",
+"រីករាយថ្ងៃកំណើត ❤️",
+"សូមឱ្យសុភមង្គលតែងតែអមដំណើរអ្នកនៅគ្រប់ជំហាននៃជីវិតរបស់អ្នក។",
+"ដោយក្ដីស្រឡាញ់ពី Yugi"
+]
+
+let msgIndex=0
+
+function showMessages(){
+
+if(msgIndex<messages.length){
+
+let p=document.createElement("p")
+p.innerText=messages[msgIndex]
+
+document.getElementById("messages").appendChild(p)
+
+msgIndex++
+
+setTimeout(showMessages,2000)
+
+}
+
+}
+
+showMessages()
+
+/* slideshow */
+
+const photos=[
+"a.jpeg",
+"e.jpeg",
+"b.jpeg",
+"c.jpeg",
+"d.jpeg"
+]
+
+let slide=0
+const img=document.getElementById("slideshow")
+
+function slideShow(){
+
+img.src=photos[slide]
+
+slide++
+
+if(slide>=photos.length){
+slide=0
+}
+
+}
+
+setInterval(slideShow,3500)
+slideShow()
+
+/* heart animation */
+
+function createHeart(){
+
+let heart=document.createElement("div")
+
+heart.className="heart"
+heart.innerHTML="❤"
+
+heart.style.left=Math.random()*100+"%"
+
+document.body.appendChild(heart)
+
+setTimeout(()=>heart.remove(),5000)
+
+}
+
+setInterval(createHeart,500)
+
+/* fireworks */
+
+function startFireworks(){
+
+setInterval(()=>{
+
+let fire=document.createElement("div")
+
+fire.className="firework"
+
+fire.style.left=Math.random()*100+"%"
+fire.style.top=Math.random()*80+"%"
+
+document.body.appendChild(fire)
+
+setTimeout(()=>fire.remove(),1000)
+
+},300)
+
+}
+
+/* photo viewer */
+
+function openPhoto(img){
+document.getElementById("viewer").style.display="flex"
+document.getElementById("viewerImg").src=img.src
+}
+
+function closePhoto(){
+document.getElementById("viewer").style.display="none"
+}
+
+/*musik*/
+
+window.addEventListener("click", function(){
+
+let music=document.querySelector("audio")
+
+if(music){
+music.play().catch(()=>{})
+}
+
+},{once:true})
+
+/* floating romantic lights */
+
+function createLight(){
+
+let light=document.createElement("div")
+
+light.className="light"
+
+light.style.left=Math.random()*100+"%"
+
+document.body.appendChild(light)
+
+setTimeout(()=>{
+light.remove()
+},8000)
+
+}
+
+setInterval(createLight,700)
+
+
+/* typing effect for title */
+
+const titles=document.querySelectorAll("h1")
+
+titles.forEach(title=>{
+
+let text=title.innerText
+title.innerText=""
+let i=0
+
+function type(){
+
+if(i<text.length){
+title.innerText+=text.charAt(i)
+i++
+setTimeout(type,60)
+}
+
+}
+
+type()
+
+})
+
+
+/* love confetti on final page */
+
+function romanticExplosion(){
+
+for(let i=0;i<40;i++){
+
+let love=document.createElement("div")
+
+love.className="loveConfetti"
+
+love.innerHTML="💖"
+
+love.style.left=Math.random()*100+"%"
+
+love.style.fontSize=(15+Math.random()*25)+"px"
+
+document.body.appendChild(love)
+
+setTimeout(()=>{
+love.remove()
+},4000)
+
+}
+
+}
+
+setInterval(()=>{
+
+if(page==5){
+romanticExplosion()
+}
+
+},2000)
+
+/* REALISTIC FIREWORKS */
+
+function createFirework(){
+
+let x = Math.random()*window.innerWidth
+let y = Math.random()*window.innerHeight*0.6
+
+for(let i=0;i<40;i++){
+
+let particle=document.createElement("div")
+particle.className="particle"
+
+let angle=Math.random()*Math.PI*2
+let speed=Math.random()*6+2
+
+let vx=Math.cos(angle)*speed
+let vy=Math.sin(angle)*speed
+
+particle.style.left=x+"px"
+particle.style.top=y+"px"
+
+particle.style.background=`hsl(${Math.random()*360},100%,60%)`
+
+document.body.appendChild(particle)
+
+let life=0
+
+function move(){
+
+life++
+
+particle.style.transform=`translate(${vx*life}px,${vy*life}px)`
+
+if(life<30){
+requestAnimationFrame(move)
+}else{
+particle.remove()
+}
+
+}
+
+move()
+
+}
+
+}
+
+setInterval(()=>{
+
+if(page==5){
+createFirework()
+}
+
+},800)
+
+/* blow candle */
+
+function blowCandle(){
+
+let flame=document.getElementById("flame")
+
+if(flame){
+flame.style.display="none"
+}
+
+romanticExplosion()
+
+setTimeout(()=>{
+nextPage()
+},1500)
+
+}
+
+
+
+</script>
+
+</body>
+</html>
