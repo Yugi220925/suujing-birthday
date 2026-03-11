@@ -99,6 +99,34 @@ animation:flicker 0.2s infinite;
 100%{transform:translateX(-50%) scale(1)}
 }
 
+.wishPopup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+
+.wishBox{
+background:rgba(255,255,255,0.1);
+backdrop-filter:blur(12px);
+padding:30px;
+border-radius:20px;
+max-width:420px;
+text-align:center;
+}
+
+.wishBox p{
+font-size:18px;
+margin-top:10px;
+color:white;
+}
+
     /* realistic fireworks */
 
 .particle{
@@ -175,6 +203,19 @@ color:white;
 text-align:center;
 overflow-x:hidden;
 padding:15px;
+}
+
+.bigHeart{
+font-size:80px;
+animation:heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat{
+0%{transform:scale(1)}
+25%{transform:scale(1.2)}
+50%{transform:scale(1)}
+75%{transform:scale(1.2)}
+100%{transform:scale(1)}
 }
 
 /* star sky */
@@ -258,6 +299,16 @@ animation:explode 1s ease-out forwards;
 100%{transform:scale(15);opacity:0}
 }
 
+#constellation{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
+z-index:1;
+}
+
 /* ===== GALERI FOTO PAGE 5 ===== */
 
 .gallery{
@@ -299,6 +350,8 @@ max-height:90%;
 border-radius:15px;
 }
 
+
+
 </style>
 </head>
 
@@ -338,8 +391,8 @@ border-radius:15px;
 
 <!-- PAGE 4 -->
 <div id="page3" class="page">
-<h2 class="typing">🎂 ធ្វើបំណងប្រាថ្នា</h2>
-<p>សូមធ្វើបំណងប្រាថ្នាមួយ</p>
+<h2 class="typing">🎂 ផ្លុំទៀនចេញ</h2>
+<p>សូមផ្លុំទៀនចេញ</p>
 
 <div class="cake">
 <div class="candle">
@@ -371,16 +424,57 @@ border-radius:15px;
 
 <!-- PAGE 6 -->
 <div id="page5" class="page">
+
 <h2>🎆 រីករាយថ្ងៃកំណើត SuuJing My Love</h2>
-<p>ដោយក្ដីស្រឡាញ់ពី Yugi</p>
-<h1>💖🎇💖</h1>
+
+<p id="finalText"></p>
+
+<h1 class="bigHeart">💖</h1>
+
+<button onclick="showSecret()">💌 Open Secret Message</button>
+
+<br><br>
+
+<button onclick="goToWish()">✨ Make A Wish</button>
+
+<br><br>
+
 <button class="gray" onclick="prevPage()">ត្រឡប់ក្រោយ</button>
-</div>
 
 </div>
 
-<div class="photoViewer" id="viewer" onclick="closePhoto()">
-<img id="viewerImg">
+<!-- PAGE 7 : WRITE WISH -->
+<div id="page6" class="page">
+
+<h2>💫 Make A Birthday Wish</h2>
+
+<p>SuuJing, write your wish here ✨</p>
+
+<textarea id="wishInput" placeholder="Write your birthday wish..."
+style="width:100%;height:120px;border-radius:10px;padding:12px;"></textarea>
+
+<br><br>
+
+<button onclick="showWishPopup()">Send My Wish 💖</button>
+
+<br><br>
+
+<button class="gray" onclick="prevPage()">Back</button>
+
+</div>
+
+<div id="wishPopup" class="wishPopup">
+
+<div class="wishBox">
+
+<h2>💖 SuuJing's Wish</h2>
+
+<p id="wishTextResult"></p>
+
+<button onclick="closeWish()">Close</button>
+
+</div>
+
 </div>
 
 <script>
@@ -708,6 +802,145 @@ music.play().catch(()=>{})
 }
 
 },{once:true})
+
+const finalMessage = 
+"My Love... 💖\n" +
+"រីករាយថ្ងៃកំណើតអូនសម្លាញ់។ អរគុណដែលបានក្លាយជាផ្ទះដ៏មានផាសុកភាពបំផុតសម្រាប់បេះដូងបង។.\n" +
+"នៅថ្ងៃពិសេសរបស់អ្នកនេះ ខ្ញុំមានអំណរគុណដែលព្រះជាម្ចាស់បាននាំអ្នកចូលមកក្នុងជីវិតរបស់ខ្ញុំ។\n" +
+"សូមឲ្យជំហាននីមួយៗដែលអ្នកដើរពោរពេញដោយសុភមង្គល ដូចជាសុភមង្គលដែលអ្នកនាំមកក្នុងជីវិតរបស់ខ្ញុំដែរ។\n\n" +
+"ពេលអ្នកធំឡើង ស្នេហារបស់ខ្ញុំចំពោះអ្នកក៏កើនឡើងដែរ។\n" +
+"Happy Birthday My Queen 🎂\n" +
+"I Love You.";
+
+let finalIndex = 0;
+
+function typeFinal(){
+
+if(page==6 && finalIndex < finalMessage.length){
+
+document.getElementById("finalText").innerHTML += finalMessage.charAt(finalIndex)
+
+finalIndex++
+
+setTimeout(typeFinal,50)
+
+}
+
+}
+
+setInterval(()=>{
+if(page==5){
+typeFinal()
+}
+},500)
+
+function showSecret(){
+
+alert("No matter how far we are...\nYou will always have a special place in my heart. 💖")
+
+}
+
+const canvas = document.getElementById("constellation");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+function drawConstellation(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="white";
+ctx.font="60px Arial";
+ctx.textAlign="center";
+
+ctx.fillText("Happy Birthday", canvas.width/2, canvas.height/2 - 40);
+ctx.fillText("SuuJing", canvas.width/2, canvas.height/2 + 40);
+
+let imgData = ctx.getImageData(0,0,canvas.width,canvas.height).data;
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+let stars=[];
+
+for(let y=0;y<canvas.height;y+=6){
+for(let x=0;x<canvas.width;x+=6){
+
+let index=(y*canvas.width+x)*4;
+
+if(imgData[index+3]>128){
+
+stars.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+tx:x,
+ty:y
+})
+
+}
+
+}
+}
+
+function animate(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+stars.forEach(star=>{
+
+star.x+=(star.tx-star.x)*0.05;
+star.y+=(star.ty-star.y)*0.05;
+
+ctx.beginPath();
+ctx.arc(star.x,star.y,2,0,Math.PI*2);
+ctx.fillStyle="white";
+ctx.fill();
+
+})
+
+requestAnimationFrame(animate)
+
+}
+
+animate()
+
+}
+
+setTimeout(drawConstellation,1000);
+
+function showWishPopup(){
+
+let wish=document.getElementById("wishInput").value
+
+if(!wish){
+
+alert("Please write your wish first 💖")
+
+return
+
+}
+
+document.getElementById("wishTextResult").innerText = wish
+
+document.getElementById("wishPopup").style.display="flex"
+
+romanticExplosion()
+
+}
+
+function closeWish(){
+
+document.getElementById("wishPopup").style.display="none"
+
+}
+
+function goToWish(){
+
+page = 6
+
+showPage()
+
+}
 
 </script>
 
